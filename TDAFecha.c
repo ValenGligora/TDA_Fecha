@@ -12,7 +12,8 @@ typedef struct {
 void ingresoFechaValida(Fecha *fecha);
 bool esFechaValida(Fecha *f);
 int cantDiasMes(int m,int a);
-void SumarDias(Fecha fecha);
+void SumarDias(Fecha *fecha);
+void FechaSumaDias(int n);
 
 
 
@@ -21,7 +22,7 @@ int main(){
     Fecha fecha;
     ingresoFechaValida(&fecha);
     //fechaSumarDias();
-    SumarDias(fecha);
+    SumarDias(&fecha);
 }
 
 void ingresoFechaValida(Fecha *fecha){
@@ -34,8 +35,15 @@ void ingresoFechaValida(Fecha *fecha){
     }
 }
 
-void SumarDias(Fecha fecha){
-    printf("Indique cuantos dias desea sumarle a la fecha: %d/%d/%d",fecha.d,fecha.m,fecha.a);
+void SumarDias(Fecha *fecha){
+    int sum;
+    printf("Indique cuantos dias desea sumarle a la fecha: %d/%d/%d",fecha->d,fecha->m,fecha->a);
+    scanf("%d",&sum);
+    FechaSumaDias(sum);
+}
+
+void FechaSumaDias(int n){
+
 }
 
 bool esFechaValida(Fecha *f){
