@@ -13,7 +13,7 @@ void ingresoFechaValida(Fecha *fecha);
 bool esFechaValida(Fecha *f);
 int cantDiasMes(int m,int a);
 void SumarDias(Fecha *fecha);
-void FechaSumaDias(int n);
+Fecha FechaSumaDias(int n,const Fecha *f);
 
 
 
@@ -37,13 +37,28 @@ void ingresoFechaValida(Fecha *fecha){
 
 void SumarDias(Fecha *fecha){
     int sum;
-    printf("Indique cuantos dias desea sumarle a la fecha: %d/%d/%d",fecha->d,fecha->m,fecha->a);
+    Fecha fnueva;
+    printf("Indique cuantos dias desea sumarle a la fecha %d/%d/%d: ",fecha->d,fecha->m,fecha->a);
     scanf("%d",&sum);
-    FechaSumaDias(sum);
+    fnueva= FechaSumaDias(sum,fecha);
+    printf("\nLa nueva fecha seria: %d/%d/%d",fnueva.d,fnueva.m,fnueva.a);
 }
 
-void FechaSumaDias(int n){
-
+Fecha FechaSumaDias(int n,const Fecha *f){
+    int cdm;
+    Fecha FSuma= *f;
+    FSuma.d+=n;
+    while (FSuma.d>(cdm=cantDiasMes(FSuma.m,FSuma.a)))
+    {
+        FSuma.d-=cdm;
+        FSuma.m--;
+        if (FSuma.m>12)
+        {
+            FSuma.m=1;
+            FSuma.a++;
+        }
+    }
+    return FSuma;
 }
 
 bool esFechaValida(Fecha *f){
