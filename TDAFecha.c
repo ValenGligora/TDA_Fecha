@@ -14,6 +14,8 @@ bool esFechaValida(Fecha *f);
 int cantDiasMes(int m,int a);
 void SumarDias(Fecha *fecha);
 Fecha FechaSumaDias(int n,const Fecha *f);
+void DiaAño(const Fecha *fecha);
+void DiaSemana(const Fecha *fecha);
 
 
 
@@ -21,8 +23,9 @@ int main(){
     //hacer display de la fecha
     Fecha fecha;
     ingresoFechaValida(&fecha);
-    //fechaSumarDias();
     SumarDias(&fecha);
+    DiaAño(&fecha);
+    DiaSemana(&fecha);
 }
 
 void ingresoFechaValida(Fecha *fecha){
@@ -42,6 +45,38 @@ void SumarDias(Fecha *fecha){
     scanf("%d",&sum);
     fnueva= FechaSumaDias(sum,fecha);
     printf("\nLa nueva fecha seria: %d/%d/%d",fnueva.d,fnueva.m,fnueva.a);
+}
+
+void DiaAño(const Fecha *fecha){
+    int dias;
+    for (int i = 1; i < fecha->m ; i++)
+    {
+        dias+=cantDiasMes(i,fecha->a);
+    }
+    dias+=fecha->d;
+}
+
+void DiaSemana(const Fecha *fecha){
+    char *DiaSem[7]={"Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado","Domingo"};
+    int MesAux= fecha->m;
+    int AnioAux= fecha->a;
+    int siglo;
+    if (MesAux<3)
+    {
+        MesAux+=12;
+        AnioAux--;
+    }
+    //if (AnioAux>2000) siglo = (AnioAux/100)+1;
+    //else    siglo = AnioAux/100;
+    siglo = (AnioAux/100)+1;
+    int anioEnSiglo = (AnioAux%100);
+    
+    
+    int DS = (fecha->d + 13 * (MesAux + 1) / 5 + anioEnSiglo + anioEnSiglo / 4 + siglo / 4 + 5 * siglo) % 7;
+    
+    if (AnioAux<2000) DS--;
+    
+    printf("\nEl dia de la semana es: %s",DiaSem[DS]);
 }
 
 Fecha FechaSumaDias(int n,const Fecha *f){
